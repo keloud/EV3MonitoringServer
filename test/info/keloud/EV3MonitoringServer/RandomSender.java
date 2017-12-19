@@ -20,12 +20,13 @@ class RandomSender {
         int colorSensor = 0;
         int ultrasonicSensor = 0;
         int gyroSensor = 0;
+        int timer = 0;
         try {
             socket = new Socket("localhost", 50000);
             printWriter = new PrintWriter(socket.getOutputStream(), true);
 
             for (int i = 0; i < 500; i++) {
-                printWriter.println("Mode:" + operationMode + ",Left:" + accumulationMotorLeft + ",Right:" + accumulationMotorRight + ",Center:" + accumulationMotorCenter + ",ColorId:" + colorSensor + ",Ultrasonic:" + ultrasonicSensor + ",Gyro:" + gyroSensor);
+                printWriter.println("Mode:" + operationMode + ",Left:" + accumulationMotorLeft + ",Right:" + accumulationMotorRight + ",Center:" + accumulationMotorCenter + ",ColorId:" + colorSensor + ",Ultrasonic:" + ultrasonicSensor + ",Gyro:" + gyroSensor + ",Timer:" + timer);
                 accumulationMotorLeft++;
                 accumulationMotorRight++;
                 accumulationMotorCenter++;
@@ -46,6 +47,7 @@ class RandomSender {
                 } else {
                     gyroSensor = -360;
                 }
+                timer++;
             }
             printWriter.println("All Complete");
         } catch (IOException e) {

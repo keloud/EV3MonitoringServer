@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 class MainPanel extends JPanel {
-    private JTextField acquiredValueTextField, operationModeTextField, accumulationMotorLeftTextField, accumulationMotorRightTextField, accumulationMotorCenterTextField, colorIntTextField, colorStringTextField, ultrasonicTextField, gyroTextField;
+    private JTextField acquiredValueTextField, operationModeTextField, accumulationMotorLeftTextField, accumulationMotorRightTextField, accumulationMotorCenterTextField, colorIntTextField, colorStringTextField, ultrasonicTextField, gyroTextField, timerTextField;
 
 
     MainPanel() {
@@ -15,7 +15,7 @@ class MainPanel extends JPanel {
 
         //ステータスパネル
         JPanel statusPanel = new JPanel();
-        statusPanel.setLayout(new GridLayout(7, 2));
+        statusPanel.setLayout(new GridLayout(8, 2));
 
         // 状態表示
         JLabel informationLabel = new JLabel("現在の状態");
@@ -67,6 +67,12 @@ class MainPanel extends JPanel {
         gyroTextField = new JTextField("Data is not received.");
         statusPanel.add(gyroTextField);
 
+        // タイマーカウンター
+        JLabel timerLabel = new JLabel("タイマーカウンター");
+        statusPanel.add(timerLabel);
+        timerTextField = new JTextField("Data is not received.");
+        statusPanel.add(timerTextField);
+
         add("Center", statusPanel);
 
         // 上部表示パネル
@@ -86,7 +92,7 @@ class MainPanel extends JPanel {
         // System.out.println("MainPanel.refreshTextField");
         try {
             acquiredValueTextField.setText(bufferedString);
-            String[] bufferedStrings = bufferedString.split(",", 7);
+            String[] bufferedStrings = bufferedString.split(",", 0);
             // System.out.println(bufferedStrings[0] + " " + bufferedStrings[1] + " " + bufferedStrings[2] + " " + bufferedStrings[3] + " " + bufferedStrings[4] + " " + bufferedStrings[5] + " " + bufferedStrings[6] + " ");
             if (bufferedStrings[0] != null) {
                 operationModeTextField.setText(bufferedStrings[0]);
@@ -128,6 +134,11 @@ class MainPanel extends JPanel {
             } else {
                 gyroTextField.setText("NullPointerException");
             }
+            if (bufferedStrings[7] != null) {
+                timerTextField.setText(bufferedStrings[7]);
+            } else {
+                timerTextField.setText("NullPointerException");
+            }
         } catch (ArrayIndexOutOfBoundsException ae) {
             // System.out.println("ArrayIndexOutOfBoundsException");
             operationModeTextField.setText("The number of symbols of the received value is different.");
@@ -138,6 +149,7 @@ class MainPanel extends JPanel {
             colorStringTextField.setText("");
             ultrasonicTextField.setText("");
             gyroTextField.setText("");
+            timerTextField.setText("");
         }
         repaint();
     }
