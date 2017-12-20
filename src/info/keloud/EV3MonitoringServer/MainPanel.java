@@ -2,13 +2,21 @@ package info.keloud.EV3MonitoringServer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
 
 class MainPanel extends JPanel {
     private JTextField acquiredValueTextField, operationModeTextField, accumulationMotorLeftTextField, accumulationMotorRightTextField, accumulationMotorCenterTextField, colorIntTextField, colorStringTextField, ultrasonicTextField, gyroTextField, timerTextField;
-
+    private PrintWriter pw;
 
     MainPanel() {
         // System.out.println("info.keloud.EV3MonitoringServer.MainPanel.info.keloud.EV3MonitoringServer.MainPanel");
+        try {
+            //書き出し用にオブジェクト化
+            File file = new File("C:\\EV3MonitoringServer\\result.txt");
+            pw = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+        } catch (IOException e) {
+            e.getStackTrace();
+        }
 
         //セットレイアウトパネル
         setLayout(new BorderLayout());
@@ -86,6 +94,10 @@ class MainPanel extends JPanel {
         acquiredValuePanel.add(acquiredValueTextField);
 
         add("North", acquiredValuePanel);
+
+        // 1行目に書き込む
+        pw.println("EV3MonitoringServer Start log collection.");
+        pw.flush();
     }
 
     void refreshTextField(String bufferedString) {
@@ -139,6 +151,8 @@ class MainPanel extends JPanel {
             } else {
                 timerTextField.setText("NullPointerException");
             }
+            pw.println(bufferedStrings[0] + " " + bufferedStrings[1] + " " + bufferedStrings[2] + " " + bufferedStrings[3] + " " + bufferedStrings[4] + " " + bufferedStrings[5] + " " + bufferedStrings[6] + " " + bufferedStrings[7]);
+            pw.flush();
         } catch (ArrayIndexOutOfBoundsException ae) {
             // System.out.println("ArrayIndexOutOfBoundsException");
             operationModeTextField.setText("The number of symbols of the received value is different.");
