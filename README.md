@@ -1,5 +1,5 @@
 # EV3MonitoringServer
-EV3 Monitoring Server use Socket
+ソケット通信型モニタリングサーバー
 
 ## このソフトの目的
 EV3の状態を取得するために、ソケット通信を用いたGUIソフトウェアを作成しました
